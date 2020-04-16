@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Calculation:scenario xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:Calculation="http://www.sap.com/ndb/BiModelCalculation.ecore" id="sap-cloud-hana-data-masking-test.db::cv_display_credit_card_info" applyPrivilegeType="NONE" dataCategory="DIMENSION" dimensionType="" schemaVersion="3.0" outputViewType="Projection" cacheInvalidationPeriod="NONE" enforceSqlExecution="false">
+<descriptions defaultDescription="cv_display_credit_card_info"/>
+<localVariables/>
+<variableMappings/>
+<dataSources>
+  <DataSource id="sap-cloud-hana-data-masking-test.db::Tables.Cards">
+    <resourceUri>sap-cloud-hana-data-masking-test.db::Tables.Cards</resourceUri>
+  </DataSource>
+</dataSources>
+<calculationViews>
+  <calculationView xsi:type="Calculation:ProjectionView" id="Projection_1">
+    <viewAttributes>
+      <viewAttribute id="NAME"/>
+      <viewAttribute id="card"/>
+    </viewAttributes>
+    <calculatedViewAttributes/>
+    <input node="sap-cloud-hana-data-masking-test.db::Tables.Cards"/>
+  </calculationView>
+</calculationViews>
+<logicalModel id="Projection_1">
+  <attributes>
+    <attribute id="NAME" order="1" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="NAME"/>
+      <keyMapping columnObjectName="Projection_1" columnName="NAME"/>
+    </attribute>
+    <attribute id="card" order="2" displayAttribute="false" attributeHierarchyActive="false">
+      <descriptions defaultDescription="card"/>
+      <maskingExpression>
+CONCAT(CONCAT(left(&quot;card&quot;,5), 'XXXX-XXXX'), RIGHT(&quot;card&quot;,5))</maskingExpression>
+      <keyMapping columnObjectName="Projection_1" columnName="card"/>
+    </attribute>
+  </attributes>
+  <calculatedAttributes/>
+  <baseMeasures/>
+  <calculatedMeasures/>
+  <restrictedMeasures/>
+</logicalModel>
+<layout>
+  <shapes>
+    <shape expanded="true" modelObjectName="Output" modelObjectNameSpace="MeasureGroup">
+      <upperLeftCorner x="40" y="85"/>
+    </shape>
+  
+    <shape expanded="true" modelObjectName="Projection_1" modelObjectNameSpace="CalculationView">
+      <upperLeftCorner x="100" y="216"/>
+      <rectangleSize height="30" width="160"/>
+    </shape>
+  </shapes>
+</layout>
+</Calculation:scenario>

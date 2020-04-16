@@ -1,0 +1,8 @@
+namespace "sap-cloud-hana-data-masking-test".db;
+
+context Tables {
+    entity Cards {
+        key NAME   : String(20)  not null;
+            card   : String(20);
+    };
+};

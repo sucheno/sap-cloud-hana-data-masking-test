@@ -1,0 +1,24 @@
+
+SQL Script to load some test data:
+
+INSERT INTO "sap-cloud-hana-data-masking-test.db::Tables.Cards" VALUES ('John', '1111-1111-1111-1111');
+INSERT INTO "sap-cloud-hana-data-masking-test.db::Tables.Cards" VALUES ('Khan', '2222-2222-2222-2222');
+INSERT INTO "sap-cloud-hana-data-masking-test.db::Tables.Cards" VALUES ('Miya', '3333-3333-3333-3333');
+INSERT INTO "sap-cloud-hana-data-masking-test.db::Tables.Cards" VALUES ('Bhai', '4444-4444-4444-4444');
+INSERT INTO "sap-cloud-hana-data-masking-test.db::Tables.Cards" VALUES ('Suchen','5555-5555-5555-5555');	
+INSERT INTO "sap-cloud-hana-data-masking-test.db::Tables.Cards" VALUES ('Oguri', '6666-6666-6666-6666');
+
+
+Run the below script using HDI Admin SQL Console and assing it to HDI User. in My case HDI user is BANKDB_1_2GJBK0LP9UYMAVNE58FVU1VA9_RT
+
+This assigns the role we created for UNMASKED privilege.
+
+set schema "BANKDB_1#DI";
+create local temporary column table "#ROLES" like "_SYS_DI"."TT_SCHEMA_ROLES";
+insert into "#ROLES" ("ROLE_NAME", "PRINCIPAL_SCHEMA_NAME", "PRINCIPAL_NAME") values ('role_unmasked', '', 'BANKDB_1_2GJBK0LP9UYMAVNE58FVU1VA9_RT');
+call "BANKDB_1#DI"."GRANT_CONTAINER_SCHEMA_ROLES"("#ROLES", "_SYS_DI"."T_NO_PARAMETERS", ?, ?, ?);
+-- call "BANKDB_1#DI"."REVOKE_CONTAINER_SCHEMA_ROLES"("#ROLES", "_SYS_DI"."T_NO_PARAMETERS", ?, ?, ?);
+drop table "#ROLES";
+
+
+Note: if you are not specifying the namespace in role file, you might need to delete the .hdinamespace file (This is hidden file)
